@@ -2,15 +2,12 @@ import { useState } from "react";
 
 function PizzaBlock({ title, price, imageUrl, sizes, types }) {
     const [pizzaCount, setPizzaCount] = useState(0);
-    const [activeIndex, setActiveIndex] = useState(0);
+    const typeNames = ['тонкое', 'пышное'];
+    const [activeType, setActiveType] = useState(0);
+    const [pizzaSize, setPizzaSize] = useState(0);
 
     const onClickAddPiza = () => {
         setPizzaCount(pizzaCount + 1)
-    }
-
-    const onClickChangeCategory = (i) => {
-        debugger
-        setActiveIndex(i);
     }
 
     return (
@@ -22,22 +19,23 @@ function PizzaBlock({ title, price, imageUrl, sizes, types }) {
                 </a>
                     <div className="pizza-block__selector">
                         <ul>
-                            <li
-                                onClick={() => onClickChangeCategory(0)}
-                                className={activeIndex === types[0] ? "active" : ''}
-                            >
-                                тонкое
-                            </li>
-                            <li
-                                onClick={() => onClickChangeCategory(1)}
-                                className={activeIndex === types[1] ? "active" : ''}
-                            >
-                                пышное
-                            </li>
+                            {types.map((typeId) => (
+                                <li
+                                    onClick={() => setActiveType(typeId)}
+                                    className={activeType === typeId ? 'active' : ''}
+                                >
+                                    {typeNames[typeId]}
+                                </li>
+                            ))}
                         </ul>
                         <ul>
-                            {sizes.map((size) => (
-                                <li>{size} см</li>
+                            {sizes.map((size, i) => (
+                                <li
+                                    onClick={() => setPizzaSize(i)}
+                                    className={pizzaSize === i ? 'active' : ''}
+                                >
+                                    {size} см
+                                </li>
                             ))}
                         </ul>
                     </div>

@@ -19,13 +19,7 @@ function App() {
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
             {pizzas.map((item) => (
-              <PizzaBlock
-                title={item.title}
-                price={item.price}
-                imageUrl={item.imageUrl}
-                sizes={item.sizes}
-                types={item.types}
-              />
+              <PizzaBlock {...item} />
             ))}
           </div>
           <ul className="Pagination_root__uwB0O">

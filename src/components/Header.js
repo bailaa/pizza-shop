@@ -1,10 +1,11 @@
 import logoSvg from '../assets/img/pizza-logo.svg';
+import { Link } from 'react-router-dom';
 
 function Header() {
     return (
         <div className="header">
             <div className="container">
-                <a href="/">
+                <Link to="/">
                     <div className="header__logo">
                         <img width="38" src={logoSvg} alt="Pizza logo" />
                         <div>
@@ -12,7 +13,7 @@ function Header() {
                             <p>самая вкусная пицца во вселенной</p>
                         </div>
                     </div>
-                </a>
+                </Link>
                 <div className="Search_root__eiX89">
                     <svg className="Search_icon__XMmYc" enable-background="new 0 0 32 32" id="EditableLine" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="14" cy="14" fill="none" id="XMLID_42_" r="9" stroke="#000000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" stroke width="2">
@@ -23,7 +24,7 @@ function Header() {
                     <input className="Search_input__klILD" placeholder="Поиск пиццы..." value="" />
                 </div>
                 <div className="header__cart">
-                    <a className="button button--cart" href="/cart">
+                    <Link to="/cart" className="button button--cart" href="/cart">
                         <span>0 ₽</span>
                         <div className="button__delimiter">
                         </div>
@@ -36,7 +37,7 @@ function Header() {
                             </path>
                         </svg>
                         <span>0</span>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div >

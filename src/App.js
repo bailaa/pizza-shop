@@ -1,42 +1,26 @@
 import './scss/app.scss'
 import Header from './components/Header';
-import Categories from './components/Categories';
-import Sort from './components/Sort';
-import PizzaBlock from './components/Pizzablock/PizzaBlock';
-import pizzas from './assets/img/allUneedIsPizza.json'
-import { useState, useEffect } from 'react';
-import Skeleton from './components/Pizzablock/Skeleton';
-
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
+import {
+  Router,
+  Route,
+  Link,
+} from "react-router-dom";
+import Cart from './pages/Cart';
 
 function App() {
-  const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('https://63da4d42b28a3148f683a56f.mockapi.io/items')
-      .then((res) => res.json())
-      .then((arr) => {
-        setItems(arr);
-        setIsLoading(false);
-      })
-  }, [])
-
   return (
     <div id="root">
       <div className="wrapper">
         <Header />
-        <div className="content"><div className="container">
-          <div className="content__top">
-            <Categories />
-            <Sort />
-          </div>
-          <h2 className="content__title">Все пиццы</h2>
-          <div className="content__items">
-            {isLoading
-              ? [... new Array(5)].map((_, i) => <Skeleton key={i} />)
-              : items.map((item) => (
-                <PizzaBlock key={item.id} {...item} />
-              ))}
+        <div className="content">
+          <div className="container">
+            <Router>
+              <Route path="/" element={<Home />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="*" element={<NotFound />} />
+            </Router>
           </div>
           <ul className="Pagination_root__uwB0O">
             <li className="previous disabled">
@@ -55,7 +39,6 @@ function App() {
               <a className="" tabIndex="0" role="button" aria-disabled="false" aria-label="Next page" rel="next">&gt;</a>
             </li>
           </ul>
-        </div>
         </div>
       </div>
     </div>

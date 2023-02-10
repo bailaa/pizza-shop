@@ -1,7 +1,8 @@
 import logoSvg from '../assets/img/pizza-logo.svg';
 import { Link } from 'react-router-dom';
+import Search from './Pizzablock/Search/Search';
 
-function Header() {
+function Header({ searchValue, setSearchValue }) {
     return (
         <div className="header">
             <div className="container">
@@ -14,15 +15,7 @@ function Header() {
                         </div>
                     </div>
                 </Link>
-                <div className="Search_root__eiX89">
-                    <svg className="Search_icon__XMmYc" enable-background="new 0 0 64 64" id="EditableLine" version="1.1" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="14" cy="14" fill="none" id="XMLID_42_" r="9" stroke="#000000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2">
-                        </circle>
-                        <line fill="none" id="XMLID_44_" stroke="#000000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="27" x2="20.366" y1="27" y2="20.366">
-                        </line>
-                    </svg>
-                    <input className="Search_input__klILD" placeholder="Поиск пиццы..." value="" />
-                </div>
+                <Search searchValue={searchValue} setSearchValue={setSearchValue} />
                 <div className="header__cart">
                     <Link to="/cart" className="button button--cart" href="/cart">
                         <span>0 ₽</span>

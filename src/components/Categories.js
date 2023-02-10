@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 
 function Categories({ value, onClickCategory }) {
     // const [activeIndex, setActiveIndex] = useState(0);

@@ -11,7 +11,7 @@ function Search() {
         >
             <svg
                 className={styles.icon}
-                enable-background="new 0 0 64 64"
+                enableBackground="new 0 0 64 64"
                 id="EditableLine"
                 version="1.1"
                 viewBox="0 0 64 64"

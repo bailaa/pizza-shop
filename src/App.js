@@ -2,19 +2,21 @@ import './scss/app.scss'
 import Header from './components/Header';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
-import {
-  Routes,
-  Route
-} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Cart from './pages/Cart';
 import { useState } from 'react';
 import React from 'react';
+// import { useSelector, useDispatch } from 'react-redux'
+// import { decrement, increment } from './redux/slices/FilterSlice'
 
 export const SearchContext = React.createContext();
 
 function App() {
   const [searchValue, setSearchValue] = useState('');
+  /* const count = useSelector((state) => state.filterSlice.setCategoryId)
+  const dispatch = useDispatch() */
 
+  //у Арчакова рут не в App.js, jsx начинается с враппера
   return (
     <div id="root">
       <div className="wrapper">

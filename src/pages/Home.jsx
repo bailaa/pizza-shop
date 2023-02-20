@@ -9,18 +9,23 @@ import Skeleton from '../components/Pizzablock/Skeleton';
 import Pagination from '../components/Pagination/Pagination';
 import { SearchContext } from '../App';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategoryId, setCurrentPage } from '../redux/slices/FilterSlice';
+import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/FilterSlice';
+import qs from 'qs';
+import { useNavigate } from 'react-router-dom';
+/* import list from '../components/Sort';
+console.log(list) */
+
 
 function Home() {
     const categoryId = useSelector((state) => state.filterSlice.categoryId);
     const sortType = useSelector((state) => state.filterSlice.sort.sortProperty);
     const currPage = useSelector((state) => state.filterSlice.currentPage);
-    console.log(currPage)
+
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    // const [currentPage, setCurrentPage] = useState(1);
     const { searchValue } = useContext(SearchContext);
 
     const onChangeCategoryId = (id) => {
@@ -30,6 +35,24 @@ function Home() {
     const onChangePage = (num) => {
         dispatch(setCurrentPage(num))
     }
+
+    /*useEffect(() => {
+        if (window.location.search) { // '?sortProperty=rating&categoryId=0&currPage=1'
+            const params = qs.parse(window.location.search.substring(1));
+            console.log('params', params) // параметры в виде объекта
+
+            const sort = list.find(obj => obj.sortProperty === params.sortProperty);
+            console.log('list', list)
+            console.log(sort)
+
+            dispatch(
+                setFilters({
+                    ...params,
+
+                })
+            )
+        }
+    }, []) */
 
     useEffect(() => {
         setIsLoading(true);
@@ -49,13 +72,24 @@ function Home() {
         // window.scrollTo(0, 0);
     }, [categoryId, sortType, searchValue, currPage])
 
+    // парсинг выбранных/изначальных параметров к строке
+    //и вшивание их в адресную строчку
+
+    useEffect(() => {
+        const queryString = qs.stringify({
+            sortProperty: sortType,
+            categoryId,
+            currPage,
+        })
+
+        navigate(`?${queryString}`);
+    }, [categoryId, sortType, searchValue, currPage])
+
     const pizzas = items
         .map((item) => (
             <PizzaBlock key={item.id} {...item} />
         ));
-
     const skeleton = [...new Array(3)].map((_, i) => <Skeleton key={i} />);
-
     return (
         <div className="container">
             <div className="content__top">
@@ -72,5 +106,4 @@ function Home() {
         </div>
     )
 }
-
 export default Home;

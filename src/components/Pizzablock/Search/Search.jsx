@@ -77,6 +77,7 @@ function Search() {
                 placeholder="Поиск пиццы..."
                 value={value}
             />
+
             {value && (
                 <svg
                     onClick={onClickClear}
@@ -88,5 +89,4 @@ function Search() {
         </div>
     )
 }
-
 export default Search;

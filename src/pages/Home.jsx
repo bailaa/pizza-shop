@@ -3,18 +3,12 @@ import axios from 'axios';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/Pizzablock/PizzaBlock';
-// import pizzas from './assets/img/allUneedIsPizza.json'
 import { useState, useEffect, useContext } from 'react';
 import Skeleton from '../components/Pizzablock/Skeleton';
 import Pagination from '../components/Pagination/Pagination';
 import { SearchContext } from '../App';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/FilterSlice';
-import qs from 'qs';
-import { useNavigate } from 'react-router-dom';
-/* import list from '../components/Sort';
-console.log(list) */
-
+import { setCategoryId, setCurrentPage } from '../redux/slices/FilterSlice';
 
 function Home() {
     const categoryId = useSelector((state) => state.filterSlice.categoryId);
@@ -22,7 +16,6 @@ function Home() {
     const currPage = useSelector((state) => state.filterSlice.currentPage);
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -36,25 +29,8 @@ function Home() {
         dispatch(setCurrentPage(num))
     }
 
-    /*useEffect(() => {
-        if (window.location.search) { // '?sortProperty=rating&categoryId=0&currPage=1'
-            const params = qs.parse(window.location.search.substring(1));
-            console.log('params', params) // параметры в виде объекта
-
-            const sort = list.find(obj => obj.sortProperty === params.sortProperty);
-            console.log('list', list)
-            console.log(sort)
-
-            dispatch(
-                setFilters({
-                    ...params,
-
-                })
-            )
-        }
-    }, []) */
-
     useEffect(() => {
+        // debugger
         setIsLoading(true);
 
         const order = sortType.includes('-') ? 'asc' : 'desc';
@@ -70,19 +46,6 @@ function Home() {
                 setIsLoading(false);
             })
         // window.scrollTo(0, 0);
-    }, [categoryId, sortType, searchValue, currPage])
-
-    // парсинг выбранных/изначальных параметров к строке
-    //и вшивание их в адресную строчку
-
-    useEffect(() => {
-        const queryString = qs.stringify({
-            sortProperty: sortType,
-            categoryId,
-            currPage,
-        })
-
-        navigate(`?${queryString}`);
     }, [categoryId, sortType, searchValue, currPage])
 
     const pizzas = items

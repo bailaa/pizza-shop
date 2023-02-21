@@ -16,5 +16,4 @@ function Pagination({ currPage, onChangePage }) {
         />
     )
 }
-
 export default Pagination;

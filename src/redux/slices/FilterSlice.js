@@ -8,7 +8,6 @@ const initialState = {
         sortProperty: 'rating'
     }
 }
-
 export const filterSlice = createSlice({
     name: 'filter',
     initialState,
@@ -26,6 +25,7 @@ export const filterSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
+// export const { setCategoryId, setSort } = filterSlice.actions
 export const { setCategoryId, setSort, setCurrentPage } = filterSlice.actions
 
 export default filterSlice.reducer

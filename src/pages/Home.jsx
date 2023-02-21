@@ -3,7 +3,6 @@ import axios from 'axios';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/Pizzablock/PizzaBlock';
-// import pizzas from './assets/img/allUneedIsPizza.json'
 import { useState, useEffect, useContext } from 'react';
 import Skeleton from '../components/Pizzablock/Skeleton';
 import Pagination from '../components/Pagination/Pagination';
@@ -15,12 +14,11 @@ function Home() {
     const categoryId = useSelector((state) => state.filterSlice.categoryId);
     const sortType = useSelector((state) => state.filterSlice.sort.sortProperty);
     const currPage = useSelector((state) => state.filterSlice.currentPage);
-    console.log(currPage)
+
     const dispatch = useDispatch();
 
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    // const [currentPage, setCurrentPage] = useState(1);
     const { searchValue } = useContext(SearchContext);
 
     const onChangeCategoryId = (id) => {
@@ -32,6 +30,7 @@ function Home() {
     }
 
     useEffect(() => {
+        // debugger
         setIsLoading(true);
 
         const order = sortType.includes('-') ? 'asc' : 'desc';
@@ -53,9 +52,7 @@ function Home() {
         .map((item) => (
             <PizzaBlock key={item.id} {...item} />
         ));
-
     const skeleton = [...new Array(3)].map((_, i) => <Skeleton key={i} />);
-
     return (
         <div className="container">
             <div className="content__top">
@@ -72,5 +69,4 @@ function Home() {
         </div>
     )
 }
-
 export default Home;

@@ -29,7 +29,7 @@ function Home() {
         dispatch(setCurrentPage(num))
     }
 
-    useEffect(() => {
+    useEffect(async () => {
         // debugger
         setIsLoading(true);
 
@@ -38,13 +38,11 @@ function Home() {
         const category = categoryId > 0 ? `category=${categoryId}` : '';
         const search = searchValue ? `&search=${searchValue}` : '';
 
-        axios.get(
+        const res = await axios.get(
             `https://63da4d42b28a3148f683a56f.mockapi.io/items?page=${currPage}&limit=3&${category}&sortBy=${sort}&order=${order}${search}`
         )
-            .then((res) => {
-                setItems(res.data);
-                setIsLoading(false);
-            })
+        setItems(res.data);
+        setIsLoading(false);
         // window.scrollTo(0, 0);
     }, [categoryId, sortType, searchValue, currPage])
 

@@ -4,3 +4,11 @@
     max-width: 750px;
     margin: 0 auto;
 }
+
+.content__items2 {
+    display: grid;
+    grid-template-columns: repeat(1, 1 fr);
+    grid-template-rows: repeat(1, 1fr);
+    grid-column-gap: 11px;
+
+}

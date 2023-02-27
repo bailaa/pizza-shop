@@ -62,5 +62,4 @@ function Header({ searchValue, setSearchValue }) {
         </div >
     )
 }
-
 export default Header;

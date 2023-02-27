@@ -71,5 +71,4 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
         </div >
     )
 }
-
 export default PizzaBlock;

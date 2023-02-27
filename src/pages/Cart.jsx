@@ -42,6 +42,7 @@ const Cart = () => {
                         Корзина
                     </h2>
                     <img src="https://cdn-icons-png.flaticon.com/512/3081/3081797.png" alt="image_cart" width={100} />
+
                     <div onClick={onClickClear} className="cart_clear">
                         <svg width="20" height="20" viewBox="0 0 20 20"
                             fill="none"
@@ -71,17 +72,21 @@ const Cart = () => {
                             strokeWidth="1.2"
                             strokeLinecap="round"
                             strokeLinejoin="round"
+
+
                         >
                         </path>
                         <span>Очистить корзину</span>
                     </div>
                 </div>
+
                 <div class="content__items2">
                     {
                         items.map(item => <CartItem key={item.id} {...item} />)
                     }
                 </div>
                 <div>
+
                     <div class="cart__bottom">
                         <div className="cart__bottom-details">
                             <span> Всего пицц: <b> {totalCount} шт. </b> </span>
@@ -103,5 +108,4 @@ const Cart = () => {
         </div>
     )
 }
-
 export default Cart;

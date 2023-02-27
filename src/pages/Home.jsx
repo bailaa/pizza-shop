@@ -9,47 +9,54 @@ import Pagination from '../components/Pagination/Pagination';
 import { SearchContext } from '../App';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId, setCurrentPage } from '../redux/slices/FilterSlice';
+import { fetchPizzas } from '../redux/slices/PizzasSlice';
 
 function Home() {
     const categoryId = useSelector((state) => state.filterSlice.categoryId);
     const sortType = useSelector((state) => state.filterSlice.sort.sortProperty);
     const currPage = useSelector((state) => state.filterSlice.currentPage);
 
-    const dispatch = useDispatch();
+    const items = useSelector((state) => state.pizzasSlice.items);
+    const status = useSelector((state) => state.pizzasSlice.status);
 
-    const [items, setItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const dispatch = useDispatch();
     const { searchValue } = useContext(SearchContext);
 
     const onChangeCategoryId = (id) => {
         dispatch(setCategoryId(id))
     }
-
     const onChangePage = (num) => {
         dispatch(setCurrentPage(num))
     }
 
-    useEffect(async () => {
-        // debugger
-        setIsLoading(true);
-
+    const getPizzas = async () => {
         const order = sortType.includes('-') ? 'asc' : 'desc';
         const sort = sortType.replace('-', '');
         const category = categoryId > 0 ? `category=${categoryId}` : '';
         const search = searchValue ? `&search=${searchValue}` : '';
 
-        const res = await axios.get(
-            `https://63da4d42b28a3148f683a56f.mockapi.io/items?page=${currPage}&limit=3&${category}&sortBy=${sort}&order=${order}${search}`
+        dispatch(
+            fetchPizzas({
+                sort,
+                order,
+                category,
+                search,
+                currPage,
+            })
         )
-        setItems(res.data);
-        setIsLoading(false);
-        // window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
+    };
+
+    useEffect(() => {
+        getPizzas();
     }, [categoryId, sortType, searchValue, currPage])
 
     const pizzas = items
         .map((item) => (
             <PizzaBlock key={item.id} {...item} />
         ));
+    console.log(pizzas, 'pizzas')
+
     const skeleton = [...new Array(3)].map((_, i) => <Skeleton key={i} />);
     return (
         <div className="container">
@@ -58,11 +65,14 @@ function Home() {
                 <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
-                {isLoading
-                    ? skeleton
-                    : pizzas}
-            </div>
+            {status === 'error' ? (
+                <div className="content__error-info">
+                    <h2>Произошла ошибка 😕</h2>
+                    <p>К сожалению, не удалось получить питсы. Попробуйте повторить попытку позже.</p>
+                </div>
+            ) : (
+                <div className="content__items">{status === 'loading' ? skeleton : pizzas}</div>
+            )}
             <Pagination currPage={currPage} onChangePage={onChangePage} />
         </div>
     )

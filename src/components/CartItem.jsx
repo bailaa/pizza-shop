@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import { createListenerMiddleware } from "@reduxjs/toolkit";
 import { addItem, removeItem, minusItem } from "../redux/slices/cartSlice";

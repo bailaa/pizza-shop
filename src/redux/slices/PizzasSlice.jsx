@@ -19,7 +19,10 @@ const pizzasSlice = createSlice({
     reducers: {
         setItems(state, action) {
             state.items = action.payload;
-        }
+        },
+        /* findItem (state, action) {
+            const findItem = state.items.find((obj) => obj.id === action.payload.id)
+        } */
     },
     extraReducers: (builder) => {
         builder
@@ -38,6 +41,6 @@ const pizzasSlice = createSlice({
     }
 })
 
-export const { setItems } = pizzasSlice.actions
+export const { setItems /* , findItem */ } = pizzasSlice.actions
 
 export default pizzasSlice.reducer

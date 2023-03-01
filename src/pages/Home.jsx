@@ -10,6 +10,7 @@ import { SearchContext } from '../App';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId, setCurrentPage } from '../redux/slices/FilterSlice';
 import { fetchPizzas } from '../redux/slices/PizzasSlice';
+import { Link } from 'react-router-dom';
 
 function Home() {
     const categoryId = useSelector((state) => state.filterSlice.categoryId);
@@ -25,6 +26,7 @@ function Home() {
     const onChangeCategoryId = (id) => {
         dispatch(setCategoryId(id))
     }
+
     const onChangePage = (num) => {
         dispatch(setCurrentPage(num))
     }
@@ -53,7 +55,9 @@ function Home() {
 
     const pizzas = items
         .map((item) => (
-            <PizzaBlock key={item.id} {...item} />
+            <Link key={item.id} to={`/pizza/${item.id}`}>
+                <PizzaBlock key={item.id} {...item} />
+            </Link>
         ));
     console.log(pizzas, 'pizzas')
 

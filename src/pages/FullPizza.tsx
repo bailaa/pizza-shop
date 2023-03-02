@@ -4,10 +4,19 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const FullPizza = () => {
+const FullPizza: React.FC = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [pizza, setPizza] = useState('блаблабла')
+    const [pizza, setPizza] = useState<{
+        imageUrl: string;
+        title: string;
+        price: number;
+    }>({
+        imageUrl: '',
+        title: '',
+        price: 0,
+    })
+
     // делает перерисовку компонента также, как и useLocation,
     // если что-то поменяется
     // изменить ид на мокапи на строчки
@@ -28,6 +37,10 @@ const FullPizza = () => {
 
         fetchPizza();
     }, [])
+
+    if (!pizza) {
+        return <>'Загрузка...'</>;
+    }
 
     return (
         <div className='container'>

@@ -8,9 +8,9 @@ import CartEmpty from "./CartEmpty";
 
 const Cart = () => {
     const dispatch = useDispatch();
-    const items = useSelector((state) => state.cartSlice.items);
-    const totalPrice = useSelector((state) => state.cartSlice.totalPrice);
-    const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+    const items = useSelector((state: any) => state.cartSlice.items);
+    const totalPrice = useSelector((state: any) => state.cartSlice.totalPrice);
+    const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
     // const totalCount = useSelector((state) => state.cartSlice.totalCount);
 
     const onClickClear = () => {
@@ -80,14 +80,14 @@ const Cart = () => {
                     </div>
                 </div>
 
-                <div class="content__items2">
+                <div className="content__items2">
                     {
-                        items.map(item => <CartItem key={item.id} {...item} />)
+                        items.map((item: any) => <CartItem key={item.id} {...item} />)
                     }
                 </div>
                 <div>
 
-                    <div class="cart__bottom">
+                    <div className="cart__bottom">
                         <div className="cart__bottom-details">
                             <span> Всего пицц: <b> {totalCount} шт. </b> </span>
                             <span> Сумма заказа: <b> {totalPrice} р. </b> </span>

@@ -8,15 +8,17 @@ import { useState } from 'react';
 import React from 'react';
 import MainLayout from './layouts/MainLayout';
 
-// export const SearchContext = React.createContext();
+// export const SearchContext = React.createContext(<></>);
 
 function App() {
   // const [searchValue, setSearchValue] = useState('');
+
 
   // рут не в App.js, jsx начинается с враппера
   // и нет стэйта с [searchValue, setSearchValue]
   return (
     <div id="root">
+
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route path="/" element={<Home />} />
@@ -25,7 +27,8 @@ function App() {
           <Route path="/pizza/:id" element={<FullPizza />} />
         </Route>
       </Routes>
-    </div >
+
+    </div>
   );
 }
 

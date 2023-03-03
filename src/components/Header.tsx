@@ -2,13 +2,12 @@ import logoSvg from '../assets/img/pizza-logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 import Search from './Pizzablock/Search/Search';
 import { useSelector } from 'react-redux';
-import { cartSlice } from '../redux/slices/cartSlice';
 
-function Header({ searchValue, setSearchValue }) {
-    const totalValue = useSelector((state) => state.cartSlice.totalPrice);
-    const countOfitems = useSelector((state) => state.cartSlice.items);
-    const totalCount = countOfitems.reduce((sum, item) => sum + item.count, 0);
-    // const totalCount = useSelector((state) => state.cartSlice.totalCount);
+function Header() {
+    const totalValue = useSelector((state: any) => state.cartSlice.totalPrice);
+    const countOfitems = useSelector((state: any) => state.cartSlice.items);
+    const totalCount = countOfitems.reduce((sum: number, item: any) => sum + item.count, 0);
+
     const location = useLocation();
     // если хук реагирует на изменение роутера, 
     // он будет заставлять компонент делать перерисовку
@@ -25,9 +24,10 @@ function Header({ searchValue, setSearchValue }) {
                         </div>
                     </div>
                 </Link>
-                <Search searchValue={searchValue} setSearchValue={setSearchValue} />
-                {location.pathname !== '/cart' && (
-                    <div className="header__cart">
+
+                {location.pathname !== '/cart' && <Search />}
+                <div className="header__cart">
+                    {location.pathname !== '/cart' && (
                         <Link to="/cart" className="button button--cart" href="/cart">
                             <span>{totalValue} ₽</span>
                             <div className="button__delimiter"></div>
@@ -61,9 +61,8 @@ function Header({ searchValue, setSearchValue }) {
                             </svg>
                             <span>{totalCount}</span>
                         </Link>
-
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
         </div >
     )

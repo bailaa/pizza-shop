@@ -1,15 +1,24 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
-import { cartSlice } from "../../redux/slices/cartSlice";
+import React from "react";
 
 const typeNames = ['тонкое', 'пышное'];
 
-function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
-    const [activeType, setActiveType] = useState(0);
-    const [pizzaSize, setPizzaSize] = useState(0);
+type PizzaBlockProps = {
+    id: string;
+    title: string;
+    price: number;
+    imageUrl: string;
+    sizes: number[];
+    types: any;
+}
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, types }) => {
+    const [activeType, setActiveType] = useState<number>(0);
+    const [pizzaSize, setPizzaSize] = useState<number>(0);
     const dispatch = useDispatch();
-    const cartItem = useSelector((state) => state.cartSlice.items.find((obj) => obj.id === id));
+    const cartItem = useSelector((state: any) => state.cartSlice.items.find((obj: any) => obj.id === id));
 
     const addedCount = cartItem ? cartItem.count : 0;
 
@@ -35,7 +44,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
                 </a>
                     <div className="pizza-block__selector">
                         <ul>
-                            {types.map((typeId) => (
+                            {types.map((typeId: any) => (
                                 <li
                                     onClick={() => setActiveType(typeId)}
                                     className={activeType === typeId ? 'active' : ''}
@@ -45,7 +54,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
                             ))}
                         </ul>
                         <ul>
-                            {sizes.map((size, i) => (
+                            {sizes.map((size: number, i: number) => (
                                 <li
                                     onClick={() => setPizzaSize(i)}
                                     className={pizzaSize === i ? 'active' : ''}

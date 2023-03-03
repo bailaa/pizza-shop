@@ -1,8 +1,18 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSort } from '../redux/slices/FilterSlice';
 
-export const list = [
+type SortItem = {
+    name: string;
+    sortProperty: string;
+}
+
+type PopUpClick = MouseEvent & {
+    composedPath: Function;
+}
+
+// типизация переменной - массив объектов
+export const list: SortItem[] = [
     { name: 'популярности (DESC)', sortProperty: 'rating' },
     { name: 'популярности (ASC)', sortProperty: '-rating' },
     { name: 'цене (DESC)', sortProperty: 'price' },
@@ -13,19 +23,26 @@ export const list = [
 
 function Sort() {
     const dispatch = useDispatch();
-    const sortType = useSelector((state) => state.filterSlice.sort);
-    const sortRef = useRef();
+    const sortType = useSelector((state: any) => state.filterSlice.sort);
+    const sortRef = useRef<HTMLDivElement>(null);
 
     const [open, setOpen] = useState(false);
 
-    const onClickSelectItem = (obj) => {
+    const onClickSelectItem = (obj: SortItem) => {
         setOpen(false)
         dispatch(setSort(obj))
     }
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (!event.composedPath().includes(sortRef.current)) {
+        // когда эта функция будет применятся,
+        // она передаётся в ивентЛистенер
+        // внутри ф-ии - есть переменная _event
+        // и в ней event как MouseEvent плюс obj
+        // где типизируется composedPath
+        const handleClickOutside = (event: MouseEvent) => {
+            const _event = event as PopUpClick;
+
+            if (sortRef.current && !_event.composedPath().includes(sortRef.current)) {
                 setOpen(false)
                 console.log('click outside')
             }

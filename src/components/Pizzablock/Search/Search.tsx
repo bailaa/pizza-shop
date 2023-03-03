@@ -1,23 +1,25 @@
-import { useContext, useRef, useState, useCallback } from 'react';
-import { SearchContext } from '../../../App';
+import { useRef, useState, useCallback } from 'react';
 import styles from './Search.module.scss';
 import debounce from 'lodash.debounce';
 import { useDispatch } from 'react-redux';
 import { setSearchValue } from '../../../redux/slices/FilterSlice';
 
 
-function Search() {
+const Search: React.FC = () => {
     const [value, setValue] = useState('');
-    // const { setSearchValue } = useContext(SearchContext);
-    const inputRef = useRef();
+    const inputRef = useRef<HTMLInputElement>(null);
     const dispatch = useDispatch();
 
-    const onClickClear = () => {
+    const onClickClear = (e: React.MouseEvent<SVGSVGElement>) => {
+        console.log('e', e)
         dispatch(setSearchValue(''));
         setValue('');
-        // вытащить ссылку на DOM-элемент
-        // document.querySelector('input').focus();
-        inputRef.current.focus();
+        if (inputRef.current) {
+            // вытащить ссылку на DOM-элемент
+            // document.querySelector('input').focus();
+            inputRef.current.focus()
+            // or 'inputRef.current?.focus()'
+        }
     }
 
     // useCallback сохранить ссылку на функцию
@@ -28,7 +30,7 @@ function Search() {
         [],
     )
 
-    const onChangeInput = (e) => {
+    const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         // debugger
         setValue(e.target.value);
         updateSearchValue(e.target.value);

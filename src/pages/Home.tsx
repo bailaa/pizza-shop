@@ -1,33 +1,29 @@
-import React from "react";
-import axios from 'axios';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/Pizzablock/PizzaBlock';
-import { useState, useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import Skeleton from '../components/Pizzablock/Skeleton';
 import Pagination from '../components/Pagination/Pagination';
-import { SearchContext } from '../App';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId, setCurrentPage } from '../redux/slices/FilterSlice';
 import { fetchPizzas } from '../redux/slices/PizzasSlice';
 import { Link } from 'react-router-dom';
 
-function Home() {
-    const categoryId = useSelector((state) => state.filterSlice.categoryId);
-    const sortType = useSelector((state) => state.filterSlice.sort.sortProperty);
-    const currPage = useSelector((state) => state.filterSlice.currentPage);
-
-    const items = useSelector((state) => state.pizzasSlice.items);
-    const status = useSelector((state) => state.pizzasSlice.status);
+const Home: React.FC = () => {
+    const categoryId = useSelector((state: any) => state.filterSlice.categoryId);
+    const sortType = useSelector((state: any) => state.filterSlice.sort.sortProperty);
+    const currPage = useSelector((state: any) => state.filterSlice.currentPage);
+    const searchValue = useSelector((state: any) => state.filterSlice.searchValue);
+    const items = useSelector((state: any) => state.pizzasSlice.items);
+    const status = useSelector((state: any) => state.pizzasSlice.status);
 
     const dispatch = useDispatch();
-    const { searchValue } = useContext(SearchContext);
 
-    const onChangeCategoryId = (id) => {
+    const onChangeCategoryId = (id: number) => {
         dispatch(setCategoryId(id))
     }
 
-    const onChangePage = (num) => {
+    const onChangePage = (num: number) => {
         dispatch(setCurrentPage(num))
     }
 
@@ -38,6 +34,7 @@ function Home() {
         const search = searchValue ? `&search=${searchValue}` : '';
 
         dispatch(
+            // @ts-ignore
             fetchPizzas({
                 sort,
                 order,
@@ -54,18 +51,18 @@ function Home() {
     }, [categoryId, sortType, searchValue, currPage])
 
     const pizzas = items
-        .map((item) => (
+        .map((item: any) => (
             <Link key={item.id} to={`/pizza/${item.id}`}>
                 <PizzaBlock key={item.id} {...item} />
             </Link>
         ));
-    console.log(pizzas, 'pizzas')
 
     const skeleton = [...new Array(3)].map((_, i) => <Skeleton key={i} />);
+
     return (
         <div className="container">
             <div className="content__top">
-                <Categories value={categoryId} onClickCategory={(i) => onChangeCategoryId(i)} />
+                <Categories value={categoryId} onClickCategory={(i: number) => onChangeCategoryId(i)} />
                 <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>

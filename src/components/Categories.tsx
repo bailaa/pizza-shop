@@ -1,8 +1,14 @@
 // import { useState } from "react";
+import React from "react";
 
-function Categories({ value, onClickCategory }) {
-    // const [activeIndex, setActiveIndex] = useState(0);
-
+type CategoriesProps = {
+    value: number;
+    onClickCategory: (i: number) => void;
+}
+// компонент FC = FunctionalComponent;
+// хранит пропсы, которые хранятся внутри типа
+// таким образом типизируются пропсы 
+const Categories: React.FC<CategoriesProps> = ({ value, onClickCategory }) => {
     const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
     return (

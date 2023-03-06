@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { addItem, removeItem, minusItem, CartItemBlock } from "../redux/slices/cartSlice";
@@ -104,7 +105,7 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, type, price, count, imag
                     </svg>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

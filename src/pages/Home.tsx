@@ -1,7 +1,7 @@
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/Pizzablock/PizzaBlock';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import Skeleton from '../components/Pizzablock/Skeleton';
 import Pagination from '../components/Pagination/Pagination';
 import { useSelector } from 'react-redux';
@@ -19,10 +19,11 @@ const Home: React.FC = () => {
     const status = useSelector((state: any) => state.pizzasSlice.status);
 
     const dispatch = useAppDispatch();
-
-    const onChangeCategoryId = (id: number) => {
+    // компонент не перерисовывается, ф-я создаетсЯ только при первом рендере,
+    // а не каждый раз при перерисовке, если пропс не изменились 
+    const onChangeCategoryId = useCallback((id: number) => {
         dispatch(setCategoryId(id))
-    }
+    }, [])
 
     const onChangePage = (num: number) => {
         dispatch(setCurrentPage(num))
@@ -101,7 +102,7 @@ const Home: React.FC = () => {
         <div className="container">
             <div className="content__top">
                 <Categories value={categoryId} onClickCategory={(i: number) => onChangeCategoryId(i)} />
-                <Sort />
+                <Sort value={sort} />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {status === 'error' ? (

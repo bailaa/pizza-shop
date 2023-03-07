@@ -2,15 +2,30 @@ import logoSvg from '../assets/img/pizza-logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 import Search from './Pizzablock/Search/Search';
 import { useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
 
 function Header() {
     const totalValue = useSelector((state: any) => state.cartSlice.totalPrice);
     const countOfitems = useSelector((state: any) => state.cartSlice.items);
+    console.log('totalValue', totalValue)
+    console.log('countOfitems', countOfitems)
     const totalCount = countOfitems.reduce((sum: number, item: any) => sum + item.count, 0);
 
     const location = useLocation();
     // если хук реагирует на изменение роутера, 
     // он будет заставлять компонент делать перерисовку
+
+    const isMounted = useRef(false);
+    // на второй вызов useEffect выполни код - сохрани items в LocalStorage
+    useEffect(() => {
+        if (isMounted.current) {
+            // Метод JSON. stringify() возвращает 
+            // JavaScript-значение, преобразованное в JSON-строку.
+            const json = JSON.stringify(countOfitems);
+            localStorage.setItem('cart', json);
+        }
+        isMounted.current = true;
+    }, [countOfitems])
 
     return (
         <div className="header">
@@ -28,7 +43,7 @@ function Header() {
                 {location.pathname !== '/cart' && <Search />}
                 <div className="header__cart">
                     {location.pathname !== '/cart' && (
-                        <Link to="/cart" className="button button--cart" href="/cart">
+                        <Link to="/cart" className="button button--cart">
                             <span>{totalValue} ₽</span>
                             <div className="button__delimiter"></div>
                             <svg

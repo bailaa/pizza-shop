@@ -5,10 +5,9 @@ import { useCallback, useEffect } from 'react';
 import Skeleton from '../components/Pizzablock/Skeleton';
 import Pagination from '../components/Pagination/Pagination';
 import { useSelector } from 'react-redux';
-import { setCategoryId, setCurrentPage } from '../redux/slices/FilterSlice';
-import { fetchPizzas } from '../redux/slices/PizzasSlice';
-import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../redux/store';
+import { setCategoryId, setCurrentPage } from '../redux/slices/filter/slice';
+import { fetchPizzas } from '../redux/slices/pizza/asyncActions';
 
 const Home: React.FC = () => {
     const categoryId = useSelector((state: any) => state.filterSlice.categoryId);
@@ -102,7 +101,7 @@ const Home: React.FC = () => {
         <div className="container">
             <div className="content__top">
                 <Categories value={categoryId} onClickCategory={(i: number) => onChangeCategoryId(i)} />
-                <Sort value={sort} />
+                <Sort value={sortType} />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {status === 'error' ? (
